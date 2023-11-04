@@ -47,4 +47,13 @@ pipeline {
     post {
         failure {
             emailext subject: "Jenkins Build Failed: \${currentBuild.fullDisplayName}",
-                     body: "The Jenkins build for \${currentBuild.fullDisplayName}
+                     body: "The Jenkins build for \${currentBuild.fullDisplayName} has failed. Please investigate.",
+                     recipientProviders: [culprits()]
+        }
+        success {
+            emailext subject: "Jenkins Build Succeeded: \${currentBuild.fullDisplayName}",
+                     body: "The Jenkins build for \${currentBuild.fullDisplayName} has succeeded.",
+                     recipientProviders: [culprits()]
+        }
+    }
+}
